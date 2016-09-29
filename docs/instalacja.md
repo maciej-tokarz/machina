@@ -11,3 +11,7 @@ cordova build
 cordova emulate android
 cordova run android
 ```
+## Kolory
+```
+Wiodący rgb 0 114 198 hex 0072C6
+```
