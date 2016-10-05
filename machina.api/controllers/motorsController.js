@@ -1,6 +1,6 @@
-module.exports = function () {
+module.exports = function (pwm) {
 
-  this.forwardLeft = function (pwm, speed) {
+  this.forwardLeft = function (speed) {
     // Tylne
     pwm.setPulseLength(2, speed)
     pwm.setPulseLength(4, 0)
@@ -12,7 +12,7 @@ module.exports = function () {
     pwm.setPulseLength(6, 4096)
   }
 
-  this.forwardRight = function (pwm, speed) {
+  this.forwardRight = function (speed) {
     // Przednie
     pwm.setPulseLength(8, speed)
     pwm.setPulseLength(10, 0)
@@ -24,12 +24,12 @@ module.exports = function () {
     pwm.setPulseLength(12, 4096)
   }
 
-  this.forward = function (pwm, speed) {
+  this.forward = function (speed) {
     this.forwardLeft(pwm, speed)
     this.forwardRight(pwm, speed)
   }
 
-  this.backwardsLeft = function (pwm, speed) {
+  this.backwardsLeft = function (speed) {
     // Tylne
     pwm.setPulseLength(2, speed)
     pwm.setPulseLength(4, 4096)
@@ -41,19 +41,19 @@ module.exports = function () {
     pwm.setPulseLength(6, 0)
   }
 
-  this.backwardsRight = function (pwm, speed) {
+  this.backwardsRight = function (speed) {
     // Przednie
-    pwm.setPulseLength(8, speed) // 100 - 1000
+    pwm.setPulseLength(8, speed)
     pwm.setPulseLength(10, 4096)
     pwm.setPulseLength(9, 0)
 
     // Tylne
-    pwm.setPulseLength(13, speed) // 100 - 1000
+    pwm.setPulseLength(13, speed)
     pwm.setPulseLength(11, 4096)
     pwm.setPulseLength(12, 0)
   }
 
-  this.backwards = function (pwm, speed) {
+  this.backwards = function (speed) {
     this.backwardsLeft(pwm, speed)
     this.backwardsRight(pwm, speed)
   }

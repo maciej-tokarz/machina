@@ -1,10 +1,12 @@
 var express = require('express')
 var pwmController = require('./controllers/pwmController.js')
 var moveController = require('./controllers/moveController.js')
+var cameraController = require('./controllers/cameraController.js')
 var app = express()
 
 var pwmCtrl = new pwmController()
 var moveCtrl = new moveController(pwmCtrl.pwm)
+var cameraCtrl = new cameraController(pwmCtrl.pwm)
 
 app.all('*', function (req, res, next) {
 
@@ -30,12 +32,17 @@ app.all('*', function (req, res, next) {
 app.get('/:axis0/:axis1/:a/:b/:x/:y', function (req, res) {
 
   moveCtrl.setMotors(req.params.axis0, req.params.axis1)
+  cameraCtrl.setMotors(req.params.a, req.params.b, req.params.x, req.params.y)
 
   res.end(
     'axis0: ' + moveCtrl.axis0.toString() +
     '\naxis1: ' + moveCtrl.axis1.toString() +
     '\nkierunek: ' + moveCtrl.direction +
-    '\nskręt: ' + moveCtrl.turn)
+    '\nskręt: ' + moveCtrl.turn +
+    '\na: ' + cameraCtrl.a +
+    '\nb: ' + cameraCtrl.b +
+    '\nx: ' + cameraCtrl.x +
+    '\ny: ' + cameraCtrl.y)
 
 })
 

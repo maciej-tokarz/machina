@@ -1,8 +1,7 @@
 module.exports = function (pwm) {
   var self = this
-
   var motorsController = require('../controllers/motorsController.js')
-  var motorsCtrl = new motorsController()
+  var motorsCtrl = new motorsController(pwm)
 
   const speedMin = 0.003922
   const speedMax = 1
@@ -38,38 +37,38 @@ module.exports = function (pwm) {
       if (!axis1sign) {
         if (self.turn == 'w lewo') {
           if (self.axis0 > 200) {
-            motorsCtrl.forwardLeft(pwm, self.axis0)
-            motorsCtrl.forwardRight(pwm, self.axis1)
-          } else motorsCtrl.forward(pwm, self.axis1)
+            motorsCtrl.forwardLeft(self.axis0)
+            motorsCtrl.forwardRight(self.axis1)
+          } else motorsCtrl.forward(self.axis1)
         }
 
         if (self.turn == 'w prawo') {
           if (self.axis0 > 200) {
-            motorsCtrl.forwardLeft(pwm, self.axis1)
-            motorsCtrl.forwardRight(pwm, self.axis0)
-          } else motorsCtrl.forward(pwm, self.axis1)
+            motorsCtrl.forwardLeft(self.axis1)
+            motorsCtrl.forwardRight(self.axis0)
+          } else motorsCtrl.forward(self.axis1)
         }
 
-        if (self.turn == 'neutralny') motorsCtrl.forward(pwm, self.axis1)
+        if (self.turn == 'neutralny') motorsCtrl.forward(self.axis1)
       }
 
       // Do tyłu
       if (axis1sign) {
         if (self.turn == 'w lewo') {
           if (self.axis0 > 200) {
-            motorsCtrl.backwardsLeft(pwm, self.axis0)
-            motorsCtrl.backwardsRight(pwm, self.axis1)
-          } else motorsCtrl.backwards(pwm, self.axis1)
+            motorsCtrl.backwardsLeft(self.axis0)
+            motorsCtrl.backwardsRight(self.axis1)
+          } else motorsCtrl.backwards(self.axis1)
         }
 
         if (self.turn == 'w prawo') {
           if (self.axis0 > 200) {
-            motorsCtrl.backwardsLeft(pwm, self.axis1)
-            motorsCtrl.backwardsRight(pwm, self.axis0)
-          } else motorsCtrl.backwards(pwm, self.axis1)
+            motorsCtrl.backwardsLeft(self.axis1)
+            motorsCtrl.backwardsRight(self.axis0)
+          } else motorsCtrl.backwards(self.axis1)
         }
 
-        if (self.turn == 'neutralny') motorsCtrl.backwards(pwm, self.axis1)
+        if (self.turn == 'neutralny') motorsCtrl.backwards(self.axis1)
       }
     }
   }
