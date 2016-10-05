@@ -1,5 +1,6 @@
 module.exports = function (pwm) {
   var self = this
+
   var motorsController = require('../controllers/motorsController.js')
   var motorsCtrl = new motorsController(pwm)
 
@@ -36,14 +37,14 @@ module.exports = function (pwm) {
       // Naprzód
       if (!axis1sign) {
         if (self.turn == 'w lewo') {
-          if (self.axis0 > 200) {
+          if (self.axis0 > 180) {
             motorsCtrl.forwardLeft(self.axis0)
             motorsCtrl.forwardRight(self.axis1)
           } else motorsCtrl.forward(self.axis1)
         }
 
         if (self.turn == 'w prawo') {
-          if (self.axis0 > 200) {
+          if (self.axis0 > 180) {
             motorsCtrl.forwardLeft(self.axis1)
             motorsCtrl.forwardRight(self.axis0)
           } else motorsCtrl.forward(self.axis1)
@@ -55,14 +56,14 @@ module.exports = function (pwm) {
       // Do tyłu
       if (axis1sign) {
         if (self.turn == 'w lewo') {
-          if (self.axis0 > 200) {
+          if (self.axis0 > 180) {
             motorsCtrl.backwardsLeft(self.axis0)
             motorsCtrl.backwardsRight(self.axis1)
           } else motorsCtrl.backwards(self.axis1)
         }
 
         if (self.turn == 'w prawo') {
-          if (self.axis0 > 200) {
+          if (self.axis0 > 180) {
             motorsCtrl.backwardsLeft(self.axis1)
             motorsCtrl.backwardsRight(self.axis0)
           } else motorsCtrl.backwards(self.axis1)

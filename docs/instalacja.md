@@ -206,6 +206,10 @@ cd mjpg-streamer/mjpg-streamer-experimental
 ```
 ## Linki
 ```
-http://html5gamepad.com/
-https://github.com/bwiklund/gamepad.js
+https://1drv.ms/f/s!AoVId-NDPgmihPZR0ijOLWl7qOKYgQ
+```
+## Akumulatory
+```
+Napięcie minimalne bez obciążenia: 11,15V
+
 ```

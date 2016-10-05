@@ -6,43 +6,41 @@ module.exports = function (pwm) {
   this.x
   this.y
 
-  var positionV = 500
-  var positionH = 500
+  // var positionV = 0
+  // var positionH = 0
   
-  this.setDefault = function() {
-    pwm.setPulseLength(0, positionV)
-    pwm.setPulseLength(1, positionH)
-    pwm.allChannelsOff()
-  }
 
-  this.setMotors = function(a, b, x, y) {
+  // this.setDefault = function () {
+  //   pwm.setPulseLength(0, positionV)
+  //   pwm.setPulseLength(1, positionH)
+  //   pwm.allChannelsOff()
+  // }
+
+  this.setMotors = function (a, b, x, y) {
+
+    var i = 0
 
     self.a = a
     self.b = b
     self.x = x
     self.y = y
 
-    // if (self.y == 1 && positionV <= 2000) {
-    //   positionV = positionV + 100
-    //   pwm.setPulseLength(0, positionV)
-    // }
+    if (self.y == 1) {
+      pwm.setPulseLength(0, 1)
+    }
 
-    // if (self.a == 1 && positionV >= 600) {
-    //   positionV = positionV - 100
-    //   pwm.setPulseLength(0, positionV)
-    // }
+    if (self.a == 1) {
+      pwm.setPulseLength(0, -4)
+    }
 
-    // if (self.x == 1 && positionH <= 1300) {
-    //   positionH = positionH + 100
-    //   pwm.setPulseLength(1, positionH)
-    // }
+    if (self.x == 1) {
+      for (i = 0; i < 10; i++) {
+        pwm.setPulseLength(1, -8)
+      }
+    }
 
-    // if (self.b == 1 && positionH >= 1100) {
-    //   positionH = positionH - 100
-    //   pwm.setPulseLength(1, positionH)
-    // }
-
-    //pwm.allChannelsOff()
+    if (self.b == 1) {
+      pwm.setPulseLength(1, 1)
+    }
   }
-
 }
