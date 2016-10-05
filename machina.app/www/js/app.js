@@ -50,7 +50,13 @@ function sendData() {
   // http://192.168.1.44:8000/1/1
 
   $.ajax({
-    url: String.format('http://192.168.1.44:8000/{0}/{1}', gamepad.axes[0].toFixed(6), gamepad.axes[1].toFixed(6)),
+    url: String.format('http://192.168.1.44:8000/{0}/{1}/{2}/{3}/{4}/{5}', 
+      gamepad.axes[0].toFixed(6), 
+      gamepad.axes[1].toFixed(6),
+      gamepad.buttons[0].value,
+      gamepad.buttons[1].value,
+      gamepad.buttons[2].value,
+      gamepad.buttons[3].value),
     type: 'GET',
     success: function(result) {
       document.getElementById('message').innerText = result
