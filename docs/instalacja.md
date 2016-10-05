@@ -8,12 +8,26 @@ Po zainstalowaniu należy:
 
 sudo raspi-config
 
-- zmienić hasło administratora,
-- rozszerzyć partycję na całą objętość karty,
-- włączyć kamerę,
-- włączyć obsługę GPIO
+- zmienić hasło administratora
+- rozszerzyć partycję na całą objętość karty
+- włączyć kamerę
+- właczyć audio na jack-a
+- włączyć SSH
+- włączyć i2c
+- włączyć GPIO Server
 - włączyć obsługę Serial
 
+## Serwa SG90
+```
+brązowy przewód: GND (masa zasilania)
+czerwony przewód: Zasilanie 5 V
+pomarańczowy przewód: sygnał PWM
+```
+## Czujnik odległosci SR04
+```
+http://uczymy.edu.pl/wp/blog/2016/01/20/hc-sr04/
+UWAGA! Echo trzeba obniżyć do 3,3V
+```
 ## Instalacja karty WiFi
 ```
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
@@ -26,24 +40,10 @@ network={
 ## Instalacja Node.js
 ```
 sudo apt-get install nodejs
+sudo apt-get install nodejs-legacy
+sudo apt-get install npm
 sudo reboot
 node -v
-
-Zaktualizowanie Node.js
-sudo apt-get install npm
-sudo npm cache clean -f
-sudo npm install -g n
-sudo n stable
-node -v
-```
-## Instalacja Pico Speakera
-```
-https://github.com/tom-s/pico-speaker
-sudo apt-get install libttspico0 libttspico-utils libttspico-data alsa-utils
-
-md machina.spk
-cd machina.spk
-npm install --save pico-speaker
 ```
 ## Instalacja menedżera procesów PM2
 ```
@@ -55,13 +55,15 @@ sudo npm install pm2 -g
 
 sudo reboot
 sudo pm2 startup systemd
-# sudo pm2 start /apps/node-tts/ttsserver.js --name node-tts -i 4
-sudo pm2 start /apps/machina.api/app/server.js --name machina.api -i 4
+# sudo pm2 start /apps/node-tts/ttsserver.js --name node-tts -i 1
+sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
 sudo pm2 startup
 sudo pm2 status
 # sudo pm2 restart node-tts
 sudo pm2 restart machina.api
-sudo pm2 monit
+sudo pm2 monit machina.api
+sudo pm2 show machina.api
+sudo pm2 delete machina.api
 ```
 ## Nginx
 ```
@@ -122,6 +124,34 @@ sudo service nginx status
 sudo ps -aux | grep nginx
 sudo nginx -v
 ```
+## Instalacja Pico Speakera
+```
+https://github.com/tom-s/pico-speaker
+sudo apt-get install libttspico0 libttspico-utils libttspico-data alsa-utils
+
+md machina.spk
+cd machina.spk
+npm install pico-speaker --save
+
+głośność
+amixer  sset PCM,0 100%
+```
+## Sterowanie silnikami i serwami
+```
+sudo -s
+sudo npm install -g node-gyp
+sudo nano /usr/include/nodejs/deps/v8/include/v8.h
+
+enum WriteOptions {
+    NO_OPTIONS = 0,
+    HINT_MANY_WRITES_EXPECTED = 1,
+    NO_NULL_TERMINATION = 2,
+    PRESERVE_ASCII_NULL = 4,
+    REPLACE_INVALID_UTF8 = 0 <<< Dodać!!!
+  };
+
+sudo npm install i2c-bus
+```
 ## Cordova (https://cordova.apache.org/docs/pl/latest/guide/cli/)
 ```
 npm install -g cordova
@@ -150,7 +180,7 @@ sudo rm -r /foo/foo
 Aktualizacja
 sudo apt-get update        # Fetches the list of available updates
 sudo apt-get upgrade       # Strictly upgrades the current packages
-'  # Installs updates (new ones)
+sudo apt-get dist-upgrade  # Installs updates (new ones)
 
 Sprzątanie
 sudo apt-get autoclean
@@ -159,4 +189,9 @@ sudo apt-get autoremove
 
 Usuwanie pakietu
 sudo apt-get remove <package> && sudo apt-get autoremove
+```
+## Linki
+```
+http://html5gamepad.com/
+https://github.com/bwiklund/gamepad.js
 ```

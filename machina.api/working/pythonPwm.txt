@@ -1,0 +1,40 @@
+import sys
+from Adafruit.Adafruit_PWM_Servo_Driver import PWM
+from Data.Channel import Channel
+from Data.Motor import Motor
+
+# Kontroler:
+# y = 1 do tyłu
+# y = -1 naprzód
+# x = -1 w lewo
+# x = 1 w prawo
+
+# Uruchomienie strumienia:
+# cd mjpg-streamer/mjpg-streamer-experimental
+# ./mjpg_streamer -i "./input_raspicam.so -fps 8 -x 400 -y 225" -o "./output_http.so -w ./www"
+
+pwm = PWM(0x60)
+pwm.setPWMFreq(1024)
+speed = 0
+a = Motor(Channel(2, 4, 3), speed)
+b = Motor(Channel(7, 5, 6), speed)
+c = Motor(Channel(8, 10, 9), speed)
+d = Motor(Channel(13, 11, 12), speed)
+
+def set_speed(motor):
+
+    if speed > 0:
+        on1, on2 = 4096, 0
+    elif speed < 0:
+        on1, on2 = 0, 4096
+    else:
+        on1, on2 = 0, 0
+
+    pwm.setPWM(motor.channel.pwm, 0, abs(motor.speed))
+    pwm.setPWM(motor.channel.in1, on1, 0)
+    pwm.setPWM(motor.channel.in2, on2, 0)
+
+set_speed(a)
+set_speed(b)
+set_speed(c)
+set_speed(d)
