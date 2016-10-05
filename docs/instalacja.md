@@ -199,6 +199,11 @@ sudo apt-get autoremove
 Usuwanie pakietu
 sudo apt-get remove <package> && sudo apt-get autoremove
 ```
+# Uruchomienie strumienia:
+```
+cd mjpg-streamer/mjpg-streamer-experimental
+./mjpg_streamer -i "./input_raspicam.so -fps 8 -x 400 -y 225" -o "./output_http.so -w ./www"
+```
 ## Linki
 ```
 http://html5gamepad.com/

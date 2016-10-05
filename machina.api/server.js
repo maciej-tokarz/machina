@@ -7,6 +7,7 @@ var app = express()
 var pwmCtrl = new pwmController()
 var moveCtrl = new moveController(pwmCtrl.pwm)
 var cameraCtrl = new cameraController(pwmCtrl.pwm)
+// cameraCtrl.setDefault()
 
 app.all('*', function (req, res, next) {
 

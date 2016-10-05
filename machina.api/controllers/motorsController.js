@@ -25,8 +25,8 @@ module.exports = function (pwm) {
   }
 
   this.forward = function (speed) {
-    this.forwardLeft(pwm, speed)
-    this.forwardRight(pwm, speed)
+    this.forwardLeft(speed)
+    this.forwardRight(speed)
   }
 
   this.backwardsLeft = function (speed) {
@@ -54,8 +54,8 @@ module.exports = function (pwm) {
   }
 
   this.backwards = function (speed) {
-    this.backwardsLeft(pwm, speed)
-    this.backwardsRight(pwm, speed)
+    this.backwardsLeft(speed)
+    this.backwardsRight(speed)
   }
 
 }

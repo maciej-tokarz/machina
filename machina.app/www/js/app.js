@@ -78,4 +78,4 @@ function scanGamepad() {
 window.addEventListener('gamepadconnected', connectHandler)
 window.addEventListener('gamepaddisconnected', disconnectHandler)
 
-if (!haveEvents) setInterval(scanGamepad, 10000)
+if (!haveEvents) setInterval(scanGamepad, 1000)
