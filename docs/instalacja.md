@@ -68,6 +68,11 @@ sudo pm2 monit machina.api
 sudo pm2 show machina.api
 sudo pm2 delete machina.api
 sudo pm2 log machina.api
+
+sudo nano /etc/rc.local
+sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
+exit 0
+
 ```
 ## Nginx
 ```

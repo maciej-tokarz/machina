@@ -24,6 +24,11 @@ module.exports = function () {
     pwm.setPulseLength(12, 4096)
   }
 
+  this.forward = function (pwm, speed) {
+    this.forwardLeft(pwm, speed)
+    this.forwardRight(pwm, speed)
+  }
+
   this.backwardsLeft = function (pwm, speed) {
     // Tylne
     pwm.setPulseLength(2, speed) // 100 - 1000
@@ -47,4 +52,10 @@ module.exports = function () {
     pwm.setPulseLength(11, 4096)
     pwm.setPulseLength(12, 0)
   }
+
+  this.backwards = function (pwm, speed) {
+    this.backwardsLeft(pwm, speed)
+    this.backwardsRight(pwm, speed)
+  }
+  
 }
