@@ -65,11 +65,11 @@ function sendData() {
 function scanGamepad() {
   var gamepads = navigator.getGamepads()
   if (gamepads == 'undefined') return
-  if (gamepad == null) addGamepad(gamepads[0])
+  if (gamepad == null && gamepads[0] != 'undefined') addGamepad(gamepads[0])
   else gamepad = gamepads[0]
 }
 
 window.addEventListener('gamepadconnected', connectHandler)
 window.addEventListener('gamepaddisconnected', disconnectHandler)
 
-if (!haveEvents) setInterval(scanGamepad, 5000)
+if (!haveEvents) setInterval(scanGamepad, 1000)

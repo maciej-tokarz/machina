@@ -1,16 +1,18 @@
 var express = require('express')
-// var i2cBus = require('i2c-bus')
-// var pca9685 = require('pca9685').Pca9685Driver
+var i2cBus = require('i2c-bus')
+var pca9685 = require('pca9685').Pca9685Driver
 var app = express()
+var motors = require('./motors.js')
 
-// var options = {
-//   i2c: i2cBus.openSync(1),
-//   address: 0x60,
-//   frequency: 1000,
-//   debug: false
-// }
+var options = {
+  i2c: i2cBus.openSync(1),
+  address: 0x60,
+  frequency: 1000,
+  debug: false
+}
 
-// var pwm = new pca9685(options)
+var pwm = new pca9685(options)
+var m = new motors()
 
 app.all('*', function (req, res, next) {
 
@@ -39,7 +41,7 @@ app.all('*', function (req, res, next) {
 
 app.get('/:axis0/:axis1', function (req, res) {
 
-  var axis0sign  = req.params.axis0 > 0
+  var axis0sign = req.params.axis0 > 0
   var axis1sign = req.params.axis1 > 0
 
   var axis0 = Math.abs(req.params.axis0)
@@ -48,17 +50,55 @@ app.get('/:axis0/:axis1', function (req, res) {
   var speedMin = 0.003922
   var speedMax = 1
   var microsecondsMin = 100
-  var microsecondsMax = 1000
+  var microsecondsMax = 800
 
-  axis0 = microsecondsMin + ((axis0 - speedMin) * (microsecondsMax - microsecondsMin)/speedMax)
-  axis1 = microsecondsMin + ((axis1 - speedMin) * (microsecondsMax - microsecondsMin)/speedMax)
+  axis0 = microsecondsMin + ((axis0 - speedMin) * (microsecondsMax - microsecondsMin) / speedMax)
+  axis1 = microsecondsMin + ((axis1 - speedMin) * (microsecondsMax - microsecondsMin) / speedMax)
 
-  var direction 
+  var direction
   direction = axis1sign ? 'do tyłu' : 'naprzód'
-  if (axis1 == 100) direction = 'neutralny' 
+  if (axis1 == 100) direction = 'neutralny'
   var turn
-  turn =  axis0sign ? 'w prawo' : 'w lewo'
+  turn = axis0sign ? 'w prawo' : 'w lewo'
   if (axis0 == 100) turn = 'neutralny'
+
+  // Naprzód
+  if (!axis1sign) {
+    if (turn == 'w lewo') {
+      m.forwardLeft(pwm, axis1 - axis0)
+      m.forwardRight(pwm, axis1)
+    }
+
+    if (turn == 'w prawo') {
+      m.forwardLeft(pwm, axis1)
+      m.forwardRight(pwm, axis1 - axis0)
+    } 
+
+    if (turn == 'neutralny') {
+      m.forwardLeft(pwm, axis1)
+      m.forwardRight(pwm, axis1)
+    }
+  }
+
+  // Do tyłu
+  if (axis1sign) {
+    if (turn == 'w lewo') {
+      m.backwardsLeft(pwm, axis1 - axis0)
+      m.backwardsRight(pwm, axis1)
+    }
+
+    if (turn == 'w prawo') {
+      m.backwardsLeft(pwm, axis1)
+      m.backwardsRight(pwm, axis1 - axis0)
+    }
+
+    if (turn == 'neutralny') {
+      m.backwardsLeft(pwm, axis1)
+      m.backwardsRight(pwm, axis1)
+    }
+  }
+
+  if (axis0 == 100 && axis1 == 100) pwm.allChannelsOff()
 
   res.end(
     'axis0: ' + axis0.toString() +

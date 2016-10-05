@@ -58,12 +58,16 @@ sudo pm2 startup systemd
 # sudo pm2 start /apps/node-tts/ttsserver.js --name node-tts -i 1
 sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
 sudo pm2 startup
+sudo pm2 save
+sudo pm2 update
+
 sudo pm2 status
 # sudo pm2 restart node-tts
 sudo pm2 restart machina.api
 sudo pm2 monit machina.api
 sudo pm2 show machina.api
 sudo pm2 delete machina.api
+sudo pm2 log machina.api
 ```
 ## Nginx
 ```
