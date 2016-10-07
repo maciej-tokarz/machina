@@ -44,33 +44,24 @@ node -v
 
 Do pracy z plikami polecam: [WinSCP](https://winscp.net)
 ```
-sudo mkdir /apps
+sudo mkdir /apps/machina.api
+sudo mkdir /apps/machina.spk
 sudo chown -R pi:pi /apps
-
-cd /apps
-sudo mkdir machina.api
-cd machina.api
-
-Jeśli przekopiujemy plik package.json to wystarczy:
-sudo -s
-sudo npm install
-
-albo ręcznie:
-
+```
+machina.api (sterowanie pojazdem, kamerą)
+```
+cd /apps/machina.api
 sudo -s
 sudo npm install i2c-bus
 sudo npm install pca9685
 sudo npm install express
 ```
-
-Polecam świetny program: [WinSCP](https://winscp.net)
+machina.spk (odtwarzanie tekstów komunikatów)
 ```
-sudo mkdir /apps
-sudo chown -R pi:pi /apps
-
-
-
+cd machina.spk
+sudo npm install express
 ```
+
 ## Instalacja menedżera procesów PM2
 ```
 http://pm2.keymetrics.io/docs/usage/quick-start/
@@ -100,13 +91,9 @@ sudo pm2 log machina.api
 ```
 ## Ma mówić
 ```
-amixer  sset PCM,0 100%
 sudo apt-get install espeak
+amixer sset PCM, 100% 100%
 espeak "Hello, I am Espeak, the voice synthesizer" 2>/dev/null
-
-głośność
-amixer cset numid=1 100%,100%
-amixer  sset PCM, 100% 100%
 ```
 
 z
