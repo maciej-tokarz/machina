@@ -1,4 +1,5 @@
 var express = require('express')
+var request = require('request')
 var pwmController = require('./controllers/pwmController.js')
 var moveController = require('./controllers/moveController.js')
 var cameraController = require('./controllers/cameraController.js')
@@ -30,21 +31,22 @@ app.all('*', function (req, res, next) {
 
 })
 
-app.get('/:axis0/:axis1/:a/:b/:x/:y', function (req, res) {
+app.post('/:axis0/:axis1/:a/:b/:x/:y', function (req) {
 
   moveCtrl.setMotors(req.params.axis0, req.params.axis1)
   cameraCtrl.setMotors(req.params.a, req.params.b, req.params.x, req.params.y)
 
-  res.end(
-    'axis0: ' + moveCtrl.axis0.toString() +
-    '\naxis1: ' + moveCtrl.axis1.toString() +
-    '\nkierunek: ' + moveCtrl.direction +
-    '\nskręt: ' + moveCtrl.turn +
-    '\na: ' + cameraCtrl.a +
-    '\nb: ' + cameraCtrl.b +
-    '\nx: ' + cameraCtrl.x +
-    '\ny: ' + cameraCtrl.y)
+  // res.end(
+  //   'axis0: ' + moveCtrl.axis0.toString() +
+  //   '\naxis1: ' + moveCtrl.axis1.toString() +
+  //   '\nkierunek: ' + moveCtrl.direction +
+  //   '\nskręt: ' + moveCtrl.turn +
+  //   '\na: ' + cameraCtrl.a +
+  //   '\nb: ' + cameraCtrl.b +
+  //   '\nx: ' + cameraCtrl.x +
+  //   '\ny: ' + cameraCtrl.y)
 
 })
 
+request.post('http://127.0.0.1:8001/\'Cześć! Machina już działa.\'')
 app.listen(8000)

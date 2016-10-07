@@ -13,19 +13,16 @@ function disconnectHandler() {
 
 function addGamepad(device) {
   gamepad = device
-  if (gamepad == null || gamepad == 'undefined') return
   document.getElementById('gamepad').innerText =
-    String.format('Gamepad podłączony {0} {1}. {2} przycisków, {3} osi.',
+    String.format('Gamepad {0} {1}.',
       gamepad.index,
-      gamepad.id,
-      gamepad.buttons.length,
-      gamepad.axes.length)
+      gamepad.id)
   requestAnimationFrame(updateStatus)
 }
 
 function updateStatus() {
 
-  if (!haveEvents) scanGamepad()
+  if (!haveEvents) scanGamepads()
 
   document.getElementById('timestamp').innerText = gamepad.timestamp
   document.getElementById('axis0').innerText = gamepad.axes[0].toFixed(6)
@@ -57,25 +54,29 @@ function sendData() {
       gamepad.buttons[1].value,
       gamepad.buttons[2].value,
       gamepad.buttons[3].value),
-    type: 'GET',
-    success: function(result) {
-      document.getElementById('message').innerText = result
-    },
+    type: 'POST',
+    // success: function(result) {
+    //   document.getElementById('message').innerText = result
+    // },
     error: function(error) {
       document.getElementById('message').innerText = error
     },
-    timeout: 60000
+    timeout: 1000
   })
 }
 
-function scanGamepad() {
-  var gamepads = navigator.getGamepads()
-  if (gamepads == 'undefined') return
-  if (gamepad == null && gamepads[0] != 'undefined') addGamepad(gamepads[0])
-  else gamepad = gamepads[0]
+function scanGamepads() {
+  var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [])
+  if (gamepads[0] == undefined || gamepad != null) return
+  for (var i = 0; i < gamepads.length; i++) {
+    if (gamepads[i]) {
+      addGamepad(gamepads[i])
+      break
+    }
+  }
 }
 
 window.addEventListener('gamepadconnected', connectHandler)
 window.addEventListener('gamepaddisconnected', disconnectHandler)
 
-if (!haveEvents) setInterval(scanGamepad, 1000)
+if (!haveEvents) setInterval(scanGamepads, 1000)

@@ -1,21 +1,121 @@
+# Scenariusz przygotowania Raspberry Pi od strony programowej
+
 ## Instalacja Raspbiana Jessie
 
 Jako podstawę dziania posłuży wersja:
 
 [Minimal image based on Debian Jessie](https://www.raspberrypi.org/downloads/raspbian/)
 
-Po zainstalowaniu należy:
-
+Po zainstalowaniu należy przejść do ustawień:
+```
 sudo raspi-config
+```
+oraz
 
 - zmienić hasło administratora
+- ustawić autologowanie do konsoli
 - rozszerzyć partycję na całą objętość karty
 - włączyć kamerę
 - właczyć audio na jack-a
 - włączyć SSH
 - włączyć i2c
 - włączyć GPIO Server
-- włączyć obsługę Serial
+
+## Instalacja karty WiFi
+
+Aby można było połączyć się z Raspberry Pi warto skorzystać z karty WiFi 
+i sprawić aby przy starcie następowało automatyczne łączenie z naszą siecią:
+```
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+network={
+    ssid="nazwa_sieci"
+    psk="hasło"
+}
+```
+## Instalacja Node.js
+```
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo reboot
+node -v
+```
+## Przygotowanie miejsca na aplikacje serwera
+
+Do pracy z plikami polecam: [WinSCP](https://winscp.net)
+```
+sudo mkdir /apps
+sudo chown -R pi:pi /apps
+
+cd /apps
+sudo mkdir machina.api
+cd machina.api
+
+Jeśli przekopiujemy plik package.json to wystarczy:
+sudo -s
+sudo npm install
+
+albo ręcznie:
+
+sudo -s
+sudo npm install i2c-bus
+sudo npm install pca9685
+sudo npm install express
+```
+
+Polecam świetny program: [WinSCP](https://winscp.net)
+```
+sudo mkdir /apps
+sudo chown -R pi:pi /apps
+
+
+
+```
+## Instalacja menedżera procesów PM2
+```
+http://pm2.keymetrics.io/docs/usage/quick-start/
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo npm install pm2@latest -g
+sudo reboot
+
+sudo pm2 startup systemd
+sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
+sudo pm2 start /apps/machina.spk/server.js --name machina.spk -i 1
+sudo pm2 startup
+sudo pm2 save
+
+
+sudo pm2 status
+sudo pm2 update
+
+sudo pm2 restart machina.api
+sudo pm2 restart machina.spk
+
+sudo pm2 monit machina.api
+sudo pm2 show machina.api
+sudo pm2 delete machina.api
+sudo pm2 log machina.api
+```
+## Ma mówić
+```
+amixer  sset PCM,0 100%
+sudo apt-get install espeak
+espeak "Hello, I am Espeak, the voice synthesizer" 2>/dev/null
+
+głośność
+amixer cset numid=1 100%,100%
+amixer  sset PCM, 100% 100%
+```
+
+z
+
+z
+
+z
+
+z
 
 ## Serwa SG90
 ```
@@ -28,52 +128,9 @@ pomarańczowy przewód: sygnał PWM
 http://uczymy.edu.pl/wp/blog/2016/01/20/hc-sr04/
 UWAGA! Echo trzeba obniżyć do 3,3V
 ```
-## Instalacja karty WiFi
-```
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
-network={
-    ssid="nazwa_sieci"
-    psk="hasło"
-}
-```
-## Instalacja Node.js
-```
-sudo apt-get install nodejs
-sudo apt-get install nodejs-legacy
-sudo apt-get install npm
-sudo reboot
-node -v
-```
-## Instalacja menedżera procesów PM2
-```
-http://pm2.keymetrics.io/docs/usage/quick-start/
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo npm install pm2 -g
 
-sudo reboot
-sudo pm2 startup systemd
-# sudo pm2 start /apps/node-tts/ttsserver.js --name node-tts -i 1
-sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
-sudo pm2 startup
-sudo pm2 save
-sudo pm2 update
-
-sudo pm2 status
-# sudo pm2 restart node-tts
-sudo pm2 restart machina.api
-sudo pm2 monit machina.api
-sudo pm2 show machina.api
-sudo pm2 delete machina.api
-sudo pm2 log machina.api
-
-sudo nano /etc/rc.local
-sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
-exit 0
-
-```
 ## Nginx
 ```
 sudo apt-get install nginx
@@ -133,34 +190,6 @@ sudo service nginx status
 sudo ps -aux | grep nginx
 sudo nginx -v
 ```
-## Instalacja Pico Speakera
-```
-https://github.com/tom-s/pico-speaker
-sudo apt-get install libttspico0 libttspico-utils libttspico-data alsa-utils
-
-md machina.spk
-cd machina.spk
-npm install pico-speaker --save
-
-głośność
-amixer  sset PCM,0 100%
-```
-## Sterowanie silnikami i serwami
-```
-sudo -s
-sudo npm install -g node-gyp
-sudo nano /usr/include/nodejs/deps/v8/include/v8.h
-
-enum WriteOptions {
-    NO_OPTIONS = 0,
-    HINT_MANY_WRITES_EXPECTED = 1,
-    NO_NULL_TERMINATION = 2,
-    PRESERVE_ASCII_NULL = 4,
-    REPLACE_INVALID_UTF8 = 0 <<< Dodać!!!
-  };
-
-sudo npm install i2c-bus
-```
 ## Cordova (https://cordova.apache.org/docs/pl/latest/guide/cli/)
 ```
 npm install -g cordova
@@ -206,7 +235,8 @@ cd mjpg-streamer/mjpg-streamer-experimental
 ```
 ## Linki
 ```
-https://1drv.ms/f/s!AoVId-NDPgmihPZR0ijOLWl7qOKYgQ
+Filmy https://1drv.ms/f/s!AoVId-NDPgmihPZR0ijOLWl7qOKYgQ
+https://github.com/fivdi/pigpio
 ```
 ## Akumulatory
 ```
