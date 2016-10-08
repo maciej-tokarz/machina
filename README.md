@@ -14,6 +14,25 @@ Projekt przede wszystkim ma na celu bawiąc/uczyć stosowania technologii JavaSc
 - taśmę 15 żył 30cm do kamery
 - uchwyt do serw micro Pan/Tilt
 - ultradźwiękowy czujnik odległości HC-SR04
+- uchwyt montażowy do czujnika odległości HC-SR04
 - akumulator/pakiet Li-Pol
 - głośnik 0.1W
+
+UWAGA: Podłączenie akumulatora przy zworce Motor Hat-a ustawionej na 5V spali Raspberry oraz sam sterownik!
+
+[Proces instalacji oprogramowania](./docs/instalacja.md)
+
+Założenia:
+
+- pojazd ma poruszać się sterowany aplikacją na Androida z wykorzystaniem kontrolera do gier podłączonego przez USB OTG do telefonu
+- w aplikacji na telefonie ma być dostępny podgląd obrazu kamery
+- czujnik odległości ma zabezpieczyć pojazd przed uderzeniem w przeszkodę uruchamiając na około 20cm przed nią automatyczne hamowanie
+- bardziej zaawansowane funkcje do opracowania to np. skanowanie kamerą pomieszczenia w celu autonomicznego omijania przeszkód
+- Raspberry docelowo ma być Access Pointem (hostapd?) aby uzyskać bezpośrednią łączność.
+
+
+Maciej Tokarz © My-Poi!
+
+
+
 

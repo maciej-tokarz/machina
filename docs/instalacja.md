@@ -44,9 +44,9 @@ node -v
 
 Do pracy z plikami polecam: [WinSCP](https://winscp.net)
 ```
+sudo mkdir /apps
 sudo mkdir /apps/machina.api
 sudo mkdir /apps/machina.spk
-sudo chown -R pi:pi /apps
 ```
 machina.api (sterowanie pojazdem, kamerą)
 ```
@@ -55,11 +55,15 @@ sudo -s
 sudo npm install i2c-bus
 sudo npm install pca9685
 sudo npm install express
+sudo npm install request
 ```
 machina.spk (odtwarzanie tekstów komunikatów)
 ```
+cd ..
 cd machina.spk
 sudo npm install express
+
+sudo chown -R pi:pi /apps
 ```
 
 ## Instalacja menedżera procesów PM2
@@ -77,10 +81,6 @@ sudo pm2 start /apps/machina.spk/server.js --name machina.spk -i 1
 sudo pm2 startup
 sudo pm2 save
 
-
-sudo pm2 status
-sudo pm2 update
-
 sudo pm2 restart machina.api
 sudo pm2 restart machina.spk
 
@@ -88,13 +88,31 @@ sudo pm2 monit machina.api
 sudo pm2 show machina.api
 sudo pm2 delete machina.api
 sudo pm2 log machina.api
+
+sudo pm2 status
+sudo pm2 update
 ```
 ## Ma mówić
 ```
 sudo apt-get install espeak
-amixer sset PCM, 100% 100%
+amixer sset PCM,0 100%
 espeak "Hello, I am Espeak, the voice synthesizer" 2>/dev/null
 ```
+## Cordova (https://cordova.apache.org/docs/pl/latest/guide/cli/)
+```
+npm install -g cordova
+cordova create machina.app nazwa_wydawcy Machina
+cd machina.app
+cordova platform add android --save
+
+d:\Projekty\Machina\machina.app>cordova requirements
+
+cordova build
+cordova emulate android
+cordova run android
+```
+
+W opracowaniu...
 
 z
 
@@ -176,19 +194,6 @@ sudo service nginx configtest
 sudo service nginx status
 sudo ps -aux | grep nginx
 sudo nginx -v
-```
-## Cordova (https://cordova.apache.org/docs/pl/latest/guide/cli/)
-```
-npm install -g cordova
-cordova create machina.app nazwa_wydawcy Machina
-cd machina.app
-cordova platform add android --save
-
-d:\Projekty\Machina\machina.app>cordova requirements
-
-cordova build
-cordova emulate android
-cordova run android
 ```
 ## Kolory
 ```

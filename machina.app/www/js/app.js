@@ -44,10 +44,8 @@ function updateStatus() {
 
 function sendData() {
 
-  // http://192.168.1.44:8000/1/1
-
   $.ajax({
-    url: String.format('http://192.168.1.44:8000/{0}/{1}/{2}/{3}/{4}/{5}', 
+    url: String.format('http://192.168.1.7:8000/{0}/{1}/{2}/{3}/{4}/{5}', 
       gamepad.axes[0].toFixed(6), 
       gamepad.axes[1].toFixed(6),
       gamepad.buttons[0].value,
