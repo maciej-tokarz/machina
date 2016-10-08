@@ -25,7 +25,7 @@ UWAGA: Podłączenie akumulatora przy zworce Motor Hat-a ustawionej na 5V spali 
 Założenia:
 
 - pojazd ma poruszać się sterowany aplikacją na Androida z wykorzystaniem kontrolera do gier podłączonego przez USB OTG do telefonu
-- w aplikacji na telefonie ma być dostępny podgląd obrazu kamery
+- w aplikacji na telefonie ma być dostępny podgląd obrazu z kamery
 - czujnik odległości ma zabezpieczyć pojazd przed uderzeniem w przeszkodę uruchamiając na około 20cm przed nią automatyczne hamowanie
 - bardziej zaawansowane funkcje do opracowania to np. skanowanie kamerą pomieszczenia w celu autonomicznego omijania przeszkód
 - Raspberry docelowo ma być Access Pointem (hostapd?) aby uzyskać bezpośrednią łączność.
