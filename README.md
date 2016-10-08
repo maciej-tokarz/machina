@@ -30,6 +30,7 @@ Założenia:
 - bardziej zaawansowane funkcje do opracowania to np. skanowanie kamerą pomieszczenia w celu autonomicznego omijania przeszkód
 - Raspberry docelowo ma być Access Pointem (hostapd?) aby uzyskać bezpośrednią łączność.
 
+[Dyskusja na Facebook-u](https://www.facebook.com/groups/malinowepi/permalink/503939639776690/)
 
 Maciej Tokarz © My-Poi!
 
