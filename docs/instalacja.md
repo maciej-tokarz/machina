@@ -111,6 +111,30 @@ cordova build
 cordova emulate android
 cordova run android
 ```
+# Uruchomienie podglądu z kamery:
+```
+TODO: dostroić podgląd aby nie było lagów!
+
+sudo mkdir /apps/stream
+sudo nano /etc/rc.local
+
+raspistill --nopreview -w 400 -h 225 -vf -q 30 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
+exit 0
+
+Podgląd
+machina.prv (preview)
+http://192.168.1.7:8003
+```
+## Linki
+```
+Filmy https://1drv.ms/f/s!AoVId-NDPgmihPZR0ijOLWl7qOKYgQ
+https://github.com/fivdi/pigpio
+```
+## Akumulatory
+```
+Napięcie minimalne bez obciążenia: 11,15V
+
+```
 
 W opracowaniu...
 
@@ -219,19 +243,4 @@ sudo apt-get autoremove
 
 Usuwanie pakietu
 sudo apt-get remove <package> && sudo apt-get autoremove
-```
-# Uruchomienie strumienia:
-```
-cd mjpg-streamer/mjpg-streamer-experimental
-./mjpg_streamer -i "./input_raspicam.so -fps 8 -x 400 -y 225" -o "./output_http.so -w ./www"
-```
-## Linki
-```
-Filmy https://1drv.ms/f/s!AoVId-NDPgmihPZR0ijOLWl7qOKYgQ
-https://github.com/fivdi/pigpio
-```
-## Akumulatory
-```
-Napięcie minimalne bez obciążenia: 11,15V
-
 ```
