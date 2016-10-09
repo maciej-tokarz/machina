@@ -1,6 +1,6 @@
 Licencja MIT
 
-Maciej Tokarz © My-Poi! 
+Maciej Tokarz © My-Poi!
  
 Niniejszym gwarantuje się, bez opłat, że każda osoba, która wejdzie w posiadanie kopii tego oprogramowania i związanych z nim plików dokumentacji (dalej „Oprogramowanie”) może wprowadzać do obrotu Oprogramowanie bez żadnych ograniczeń, w tym bez ograniczeń prawa do użytkowania, kopiowania, modyfikowania, łączenia, publikowania, dystrybuowania, sublicencjonowania i/lub sprzedaży kopii Oprogramowania a także zezwalania osobie, której Oprogramowanie zostało dostarczone czynienia tego samego, z zastrzeżeniem następujących warunków: 
 

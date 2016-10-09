@@ -13,6 +13,7 @@ Projekt przede wszystkim ma na celu bawiąc/uczyć stosowania technologii JavaSc
 - kamerę
 - taśmę 15 żył 30cm do kamery
 - uchwyt do serw micro Pan/Tilt
+- dwa micro serwa TowerPro SG-90 lub inne
 - ultradźwiękowy czujnik odległości HC-SR04
 - uchwyt montażowy do czujnika odległości HC-SR04
 - akumulator/pakiet Li-Pol
@@ -32,6 +33,7 @@ Założenia:
 
 [Dyskusja na Facebook-u](https://www.facebook.com/groups/malinowepi/permalink/503939639776690/)
 
+___
 Maciej Tokarz © My-Poi!
 
 
