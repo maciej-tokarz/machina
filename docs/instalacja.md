@@ -2,7 +2,7 @@
 
 ## Instalacja Raspbiana Jessie
 
-Jako podstawę dziania posłuży wersja:
+Jako podstawę działania posłuży wersja:
 
 [Minimal image based on Debian Jessie](https://www.raspberrypi.org/downloads/raspbian/)
 
