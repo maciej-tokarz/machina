@@ -78,3 +78,6 @@ window.addEventListener('gamepadconnected', connectHandler)
 window.addEventListener('gamepaddisconnected', disconnectHandler)
 
 if (!haveEvents) setInterval(scanGamepads, 1000)
+
+var player = new MJPEG.Player('player', 'http://192.168.1.7:8003')
+player.start()

@@ -1,13 +1,9 @@
-var express = require('express')
 var http = require('http')
 var fs = require('fs')
-var app = express()
-var server = http.createServer(app)
-// app.use(express.static('app'))
 
-app.get('/', function (request, res) {
+var server = http.createServer(function (request, response) {
 
-  res.writeHead(200, {
+  response.writeHead(200, {
     'Content-Type': 'multipart/x-mixed-replace; boundary=myboundary',
     'Cache-Control': 'no-cache',
     'Connection': 'close',
@@ -16,21 +12,21 @@ app.get('/', function (request, res) {
 
   var stop = false;
 
-  res.connection.on('close', function () { stop = true })
+  response.connection.on('close', function () { stop = true })
 
   var sendPicture = function () {
 
     if (stop) return
 
-    fs.readFile('/apps/stream/picture.jpg', function (err, content) {
-      res.write("--myboundary\r\n")
-      res.write("Content-Type: image/jpeg\r\n")
-      res.write("Content-Length: " + content.length + "\r\n")
-      res.write("\r\n")
-      res.write(content, 'binary')
-      res.write("\r\n")
+    fs.readFile('/apps/stream/picture.jpg', function (error, content) {
+      response.write("--myboundary\r\n")
+      response.write("Content-Type: image/jpeg\r\n")
+      response.write("Content-Length: " + content.length + "\r\n")
+      response.write("\r\n")
+      response.write(content, 'binary')
+      response.write("\r\n")
 
-      setTimeout(sendPicture, 50)
+      setTimeout(sendPicture, 200)
     })
   }
 

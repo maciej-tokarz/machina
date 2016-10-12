@@ -77,11 +77,14 @@ sudo reboot
 
 sudo pm2 startup systemd
 sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
+sudo pm2 start /apps/machina.prv/server.js --name machina.prv -i 1
 sudo pm2 start /apps/machina.spk/server.js --name machina.spk -i 1
+
 sudo pm2 startup
 sudo pm2 save
 
 sudo pm2 restart machina.api
+sudo pm2 restart machina.prv
 sudo pm2 restart machina.spk
 
 sudo pm2 monit machina.api
@@ -111,18 +114,14 @@ cordova build
 cordova emulate android
 cordova run android
 ```
-# Uruchomienie podglądu z kamery:
-```
-TODO: dostroić podgląd aby nie było lagów!
-
-sudo mkdir /apps/stream
+# Uruchomienie podglądu z kamery GStreamer (https://gstreamer.freedesktop.org/):
 sudo nano /etc/rc.local
+raspistill --nopreview -w 300 -h 168 -vf -hf -q 50 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
 
-raspistill --nopreview -w 400 -h 225 -vf -q 30 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
 exit 0
 
-Podgląd
 machina.prv (preview)
+sudo node /apps/machina.prv/server.js
 http://192.168.1.7:8003
 ```
 ## Linki
@@ -244,3 +243,73 @@ sudo apt-get autoremove
 Usuwanie pakietu
 sudo apt-get remove <package> && sudo apt-get autoremove
 ```
+
+
+## Podgląd stare
+
+
+
+mkfifo fifo.500
+/opt/vc/bin/raspivid -o fifo.500 -t 0 -b 20000
+
+
+
+
+cat fifo.500 | nc.traditional 192.168.1.7 5000 &
+
+
+```
+???
+sudo apt-get install libav-tools
+???
+
+sudo -s
+sudo apt-get install git
+
+cd /usr/src
+git clone git://git.videolan.org/x264
+cd x264
+./configure --host=arm-unknown-linux-gnueabi --enable-static --disable-opencl
+make
+sudo make install
+
+cd /usr/src
+git clone https://github.com/ffmpeg/ffmpeg.git
+cd ffmpeg
+sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-libx264 --enable-nonfree
+make
+sudo make install
+
+raspivid -o - -t 0 -vf -hf -fps 30 -b 6000000 | ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /apps -f h264 -i -
+
+raspivid -o - -t 0 -vf -hf -fps 30 -b 6000000 | ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 128k -g 50 -strict experimental -f flv rtmp://192.168.1.7:8003
+
+ffmpeg raspivid
+
+TODO: dostroić podgląd aby nie było lagów!
+
+Opcja z zapisem sekwencyjnym zdjęć:
+
+sudo mkdir /apps/stream
+
+sudo nano /etc/rc.local
+
+raspistill --nopreview -w 400 -h 225 -vf -q 30 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
+
+raspistill --nopreview -w 300 -h 168 -vf -hf -q 50 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
+
+exit 0
+
+Podgląd
+sudo nano /etc/apt/sources.list
+dodać
+deb http://vontaene.de/raspbian-updates/ . main
+
+sudo apt-get install debian-keyring
+gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
+gpg --armor --export 1F41B907 | sudo apt-key add -
+
+sudo apt-get update
+sudo apt-get install gstreamer1.0
+
+apt-get install gstreamer-tools
