@@ -114,7 +114,7 @@ cordova build
 cordova emulate android
 cordova run android
 ```
-# Uruchomienie podglądu z kamery GStreamer (https://gstreamer.freedesktop.org/):
+# Uruchomienie podglądu z kamery:
 sudo nano /etc/rc.local
 raspistill --nopreview -w 300 -h 168 -vf -hf -q 50 -o /apps/stream/picture.jpg -tl 50 -t 9999999 -th 0:0:0 &
 
