@@ -15,13 +15,14 @@ void loop() {
   channel[1] = pulseIn(3, HIGH);
   channel[2] = pulseIn(4, HIGH);
   channel[3] = pulseIn(5, HIGH);
-  result += "\"throttle\": ";
+  result += "{\"throttle\": ";
   result += channel[0];
-  result += " \"yaw\": ";
+  result += ", \"yaw\": ";
   result += channel[1];
-  result += " \"pith\": ";
+  result += ", \"pith\": ";
   result += channel[2];
-  result += " \"roll\": ";
+  result += ", \"roll\": ";
   result += channel[3];
+  result += "}";
   Serial.println(result);
 }

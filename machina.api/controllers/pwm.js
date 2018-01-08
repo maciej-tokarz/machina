@@ -10,6 +10,9 @@ var port = new SerialPort('/dev/ttyACM0', {
 port.pipe(parser);
 
 parser.on('data', function (data) {
-  var rcData = JSON.parse(data.toString());
+  data = data.toString();
+  console.log(data);
+  var rcData = JSON.parse(data);
   console.log(rcData.throttle);
+  // console.log(data.toString());
 });
