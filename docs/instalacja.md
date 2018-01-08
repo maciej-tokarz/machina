@@ -12,7 +12,7 @@ sudo raspi-config
 ```
 oraz
 
-- zmienić hasło administratora
+- zmienić hasło administratora-
 - ustawić autologowanie do konsoli
 - rozszerzyć partycję na całą objętość karty
 - włączyć kamerę
@@ -20,6 +20,7 @@ oraz
 - włączyć SSH
 - włączyć i2c
 - włączyć GPIO Server
+- włączyć Serial (jak po UART PuTTY)
 
 ## Instalacja karty WiFi
 
@@ -32,14 +33,65 @@ network={
     ssid="nazwa_sieci"
     psk="hasło"
 }
+
+## Zmiana ustawień na PL
+
+
 ```
 ## Instalacja Node.js
 ```
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo reboot
+wget -O - https://raw.githubusercontent.com/sdesalas/node-pi-zero/master/install-node-v.last.sh | bash
 node -v
 ```
+
+pi@raspberrypi:~/machina.api$ ls /dev/tty*
+/dev/tty    /dev/tty19  /dev/tty3   /dev/tty40  /dev/tty51  /dev/tty62
+/dev/tty0   /dev/tty2   /dev/tty30  /dev/tty41  /dev/tty52  /dev/tty63
+/dev/tty1   /dev/tty20  /dev/tty31  /dev/tty42  /dev/tty53  /dev/tty7
+/dev/tty10  /dev/tty21  /dev/tty32  /dev/tty43  /dev/tty54  /dev/tty8
+/dev/tty11  /dev/tty22  /dev/tty33  /dev/tty44  /dev/tty55  /dev/tty9
+/dev/tty12  /dev/tty23  /dev/tty34  /dev/tty45  /dev/tty56  /dev/ttyACM0
+/dev/tty13  /dev/tty24  /dev/tty35  /dev/tty46  /dev/tty57  /dev/ttyAMA0
+/dev/tty14  /dev/tty25  /dev/tty36  /dev/tty47  /dev/tty58  /dev/ttyprintk
+/dev/tty15  /dev/tty26  /dev/tty37  /dev/tty48  /dev/tty59  /dev/ttyS0
+/dev/tty16  /dev/tty27  /dev/tty38  /dev/tty49  /dev/tty6
+/dev/tty17  /dev/tty28  /dev/tty39  /dev/tty5   /dev/tty60
+/dev/tty18  /dev/tty29  /dev/tty4   /dev/tty50  /dev/tty61
+pi@raspberrypi:~/machina.api$ ls /dev/tty*
+/dev/tty    /dev/tty19  /dev/tty3   /dev/tty40  /dev/tty51  /dev/tty62
+/dev/tty0   /dev/tty2   /dev/tty30  /dev/tty41  /dev/tty52  /dev/tty63
+/dev/tty1   /dev/tty20  /dev/tty31  /dev/tty42  /dev/tty53  /dev/tty7
+/dev/tty10  /dev/tty21  /dev/tty32  /dev/tty43  /dev/tty54  /dev/tty8
+/dev/tty11  /dev/tty22  /dev/tty33  /dev/tty44  /dev/tty55  /dev/tty9
+/dev/tty12  /dev/tty23  /dev/tty34  /dev/tty45  /dev/tty56  /dev/ttyAMA0
+/dev/tty13  /dev/tty24  /dev/tty35  /dev/tty46  /dev/tty57  /dev/ttyprintk
+/dev/tty14  /dev/tty25  /dev/tty36  /dev/tty47  /dev/tty58  /dev/ttyS0
+/dev/tty15  /dev/tty26  /dev/tty37  /dev/tty48  /dev/tty59
+/dev/tty16  /dev/tty27  /dev/tty38  /dev/tty49  /dev/tty6
+/dev/tty17  /dev/tty28  /dev/tty39  /dev/tty5   /dev/tty60
+/dev/tty18  /dev/tty29  /dev/tty4   /dev/tty50  /dev/tty61
+pi@raspberrypi:~/machina.api$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Przygotowanie miejsca na aplikacje serwera
 
 Do pracy z plikami polecam: [WinSCP](https://winscp.net)
@@ -66,35 +118,6 @@ sudo npm install express
 sudo chown -R pi:pi /apps
 ```
 
-## Instalacja menedżera procesów PM2
-```
-http://pm2.keymetrics.io/docs/usage/quick-start/
-
-sudo apt-get update
-sudo apt-get upgrade
-sudo npm install pm2@latest -g
-sudo reboot
-
-sudo pm2 startup systemd
-sudo pm2 start /apps/machina.api/server.js --name machina.api -i 1
-sudo pm2 start /apps/machina.prv/server.js --name machina.prv -i 1
-sudo pm2 start /apps/machina.spk/server.js --name machina.spk -i 1
-
-sudo pm2 startup
-sudo pm2 save
-
-sudo pm2 restart machina.api
-sudo pm2 restart machina.prv
-sudo pm2 restart machina.spk
-
-sudo pm2 monit machina.api
-sudo pm2 show machina.api
-sudo pm2 delete machina.api
-sudo pm2 log machina.api
-
-sudo pm2 status
-sudo pm2 update
-```
 ## Ma mówić
 ```
 sudo apt-get install espeak
@@ -157,66 +180,6 @@ http://uczymy.edu.pl/wp/blog/2016/01/20/hc-sr04/
 UWAGA! Echo trzeba obniżyć do 3,3V
 ```
 
-
-
-## Nginx
-```
-sudo apt-get install nginx
-sudo /etc/init.d/nginx start
-
-sudo mkdir /apps
-sudo mkdir /keys
-sudo mkdir /logs
-
-sudo chown -R pi:pi /apps
-sudo chown -R pi:pi /keys
-sudo chown -R pi:pi /logs
-```
-Jeśli pojawi się błąd 403 braku dostępu nginx-a to trzeba wykonać:
-```
-sudo chmod -R 775 /apps
-sudo chmod -R 775 /keys
-sudo chmod -R 775 /logs
-```
-Ustawienia
-```
-sudo nano /etc/nginx/sites-available/default
-
-server {
-  listen 80;
-  server_name 192.168.1.44;
-
-  location / {
-    proxy_pass http://127.0.0.1:8000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    error_log /logs/machina_api.errors;
-  }
-}
-```
-Restart
-```
-sudo service nginx restart
-```
-Ustawienie kompresji
-```
-sudo nano /etc/nginx/nginx.conf
-gzip_vary on;
-gzip_proxied any;
-gzip_comp_level 6;
-gzip_buffers 16 8k;
-gzip_http_version 1.1;
-gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-```
-Diagnostyka
-```
-sudo service nginx configtest
-sudo service nginx status
-sudo ps -aux | grep nginx
-sudo nginx -v
 ```
 ## Kolory
 ```
