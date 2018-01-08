@@ -56,5 +56,4 @@ module.exports = function (pwm) {
     this.backwardsLeft(speed);
     this.backwardsRight(speed);
   }
-
 }

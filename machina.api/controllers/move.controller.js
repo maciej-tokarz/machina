@@ -2,13 +2,7 @@ module.exports = function (pwm) {
   var motorsController = require('../controllers/motors.controller.js')
   var motors = new motorsController(pwm)
 
-  // const speedMin = 0.003922
-  // const speedMax = 1
-  // const microsecondsMin = 100
-  // const microsecondsMax = 500
-
   this.setMotors = function (data) {
-
     const speedMin = 0;
     const speedMax = 1100;
     const backwardMin = 1410;
@@ -26,6 +20,7 @@ module.exports = function (pwm) {
       // console.log(forward)
       motors.forwardLeft(forward);
       motors.forwardRight(forward);
+      return;
     }
 
     if (data.throttle < 1410) {
@@ -33,6 +28,7 @@ module.exports = function (pwm) {
       // console.log(backward)
       motors.backwardLeft(backward);
       motors.backwardRight(backward);
+      return;
     }
   }
 
