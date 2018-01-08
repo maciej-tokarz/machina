@@ -1,6 +1,12 @@
-var express = require('express')
-var pwm = require('./controllers/pwm.js')
-var app = express()
+var express = require('express');
+var pwmController = require('./controllers/pwm.controller.js')
+var moveController = require('./controllers/move.controller.js')
+var radioController = require('./controllers/radio.controller.js');
+
+var app = express();
+var pwm = new pwmController();
+var move = new moveController(pwm.pwm);
+var radio = radioController(move);
 
 // app.use(function(req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*')
