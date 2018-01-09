@@ -3,6 +3,8 @@ module.exports = function (pwm) {
   var motors = new motorsController(pwm)
 
   this.setMotors = function (data) {
+    // 1070 1480 1905
+
     const movement = { forward: 0, backward: 0, left: 0, right: 0 };
 
     const speedMin = 0;
