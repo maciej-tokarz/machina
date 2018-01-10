@@ -1,5 +1,5 @@
 {
-    "board": "arduino:avr:uno",
-    "port": "COM6",
+    "board": "arduino:samd:mzero_pro_bl_dbg",
+    "port": "COM3",
     "sketch": "machina.ino\\machina.ino"
 }
