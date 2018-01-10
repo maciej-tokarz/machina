@@ -1,0 +1,7 @@
+Podłączenie odbiornika z Arduino:
+
+Channel 1 > D5
+Channel 2 > D4
+Channel 3 > D2
+Channel 4 > D3
+

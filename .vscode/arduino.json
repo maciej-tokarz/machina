@@ -1,5 +1,6 @@
 {
-    "board": "arduino:samd:mzero_pro_bl_dbg",
+    "board": "arduino:avr:pro",
     "port": "COM3",
-    "sketch": "machina.ino\\machina.ino"
+    "sketch": "machina.ino\\machina.ino",
+    "configuration": "cpu=16MHzatmega328"
 }

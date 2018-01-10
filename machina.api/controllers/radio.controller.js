@@ -2,7 +2,7 @@ module.exports = function (move) {
   var SerialPort = require('serialport');
   var Readline = SerialPort.parsers.Readline;
   var parser = new Readline();
-  var port = new SerialPort('/dev/ttyACM0', {
+  var port = new SerialPort('/dev/ttyAMA0', {
     baudRate: 9600
   });
 
