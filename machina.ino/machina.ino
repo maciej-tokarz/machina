@@ -1,6 +1,3 @@
-double channel[4];
-String result;
-
 void setup()
 {
   pinMode(2, INPUT);
@@ -12,7 +9,9 @@ void setup()
 
 void loop()
 {
-  result = "";
+  double channel[4];
+  String result = "";
+
   channel[0] = pulseIn(2, HIGH);
   channel[1] = pulseIn(3, HIGH);
   channel[2] = pulseIn(4, HIGH);

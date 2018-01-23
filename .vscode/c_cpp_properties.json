@@ -5,19 +5,19 @@
             "includePath": [
                 "C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino",
                 "C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries",
+                "C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include",
                 "D:/Documents/Arduino/libraries",
-                "C:\\Users\\maciej.tokarz\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.6.16\\cores\\arduino",
                 "${workspaceRoot}/machina.ino",
                 "C:\\Users\\maciej.tokarz\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.6.17\\cores\\arduino"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
                 "path": [
-                    "${workspaceRoot}",
+                    "${workspaceRoot}/machina.ino",
                     "C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino",
                     "C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries",
+                    "C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include",
                     "D:/Documents/Arduino/libraries",
-                    "C:\\Users\\maciej.tokarz\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.6.16\\cores\\arduino",
                     "C:\\Users\\maciej.tokarz\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.6.17\\cores\\arduino"
                 ]
             },
